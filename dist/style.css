@@ -13,6 +13,19 @@ header{
     padding: 25px;
     margin: 5px;
 }
-#employeeCards {
-    margin: 0px 25%;
+.carouselContainer{
+    margin:50px 500px;
+    text-align: -webkit-center;
 }
+#nextButton,#prevButton {
+    border: inherit;
+    background: none;
+}
+.carousel-control-next-icon,.carousel-control-prev-icon{
+    background-color: black;
+    padding: 25px;
+}
+.carousel-inner {
+    width: 75%;
+}
+
