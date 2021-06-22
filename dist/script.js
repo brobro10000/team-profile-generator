@@ -8,13 +8,21 @@ function main() {
     $("<main>").attr({ "id": "main" }).appendTo(document.body)
 }
 function carouselCreator(innerItems, role) {
-    $("<div>").attr({ "id": role + "CarouselContainer", "class": "carousel slide carouselContainer" }).appendTo("#main")
-    $("<div>").attr({ "id": role + "CarouselInner", "class": "carousel-inner" }).appendTo("#" + role + "CarouselContainer")
-    for (var i = 0; i < innerItems; i++) {
-        carouselInner(i, role)
-        cards(i, role)
+    if (innerItems == 0) {
+        return
+    } else {
+        $("<div>").attr({ "id": role + "CarouselContainer", "class": "carousel slide carouselContainer" }).appendTo("#main")
+        $("<div>").attr({ "id": role + "CarouselInner", "class": "carousel-inner" }).appendTo("#" + role + "CarouselContainer")
+        for (var i = 0; i < innerItems; i++) {
+            carouselInner(i, role)
+            cards(i, role)
+        }
+        if (innerItems == 1) {
+            return
+        }
+        else
+            carouselButtons(role)
     }
-    carouselButtons(role)
 }
 function carouselInner(i, role) {
     if (i == 0)
@@ -46,8 +54,8 @@ function startProgram() {
     header()
     main()
     carouselCreator(1, "manager")
-    carouselCreator(4, "engineer")
-    carouselCreator(10, "intern")
+    carouselCreator(3, "engineer")
+    carouselCreator(5, "intern")
 }
 
 startProgram()
