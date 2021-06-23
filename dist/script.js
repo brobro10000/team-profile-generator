@@ -53,9 +53,9 @@ function carouselButtons(role) {
 function startProgram() {
     header()
     main()
-    carouselCreator(1, "manager")
-    carouselCreator(3, "engineer")
-    carouselCreator(5, "intern")
+    carouselCreator(3, "manager")
+    carouselCreator(6, "engineer")
+    carouselCreator(10, "intern")
 }
 
 startProgram()
