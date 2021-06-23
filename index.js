@@ -1,5 +1,6 @@
 const inquirer = require("inquirer")
 const fs = require("fs");
+const { generateHTML } = require("./src/generateHTML");
 const filename = 'index'
 const extension = '.html'
 const generalQuestions = 1
@@ -18,23 +19,23 @@ const initialPrompt = [
 inquirer.prompt(initialPrompt).then(data=>{
     if(data.teamMember == 'Done')
     {
-      return writeToFile(filename,data)  
+      return writeToFile(filename)  
     }
 })
 
 
 var i = 1
-function writeToFile(fileName, data) {
+function writeToFile(fileName) {
     fs.access(`${fileName}(${i++})${extension}`, (err) => {
         if (err) {
-            fs.writeFile(`${fileName}(${--i})${extension}`, data.teamMember, function (err) {
+            fs.writeFile(`${fileName}(${--i})${extension}`, generateHTML(), function (err) {
                 if (err) {
                     return console.log(err);
                 }
                 console.log(`${fileName}(${i}) successfully generated.`);
             });
         } else {
-            return writeToFile(fileName, data)
+            return writeToFile(fileName)
         }
     })
 }

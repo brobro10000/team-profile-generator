@@ -35,7 +35,7 @@ function cards(i, role) {
     $("<div>").attr({ "id": role + "cardContainer" + i, "class": "card ml-1 mr-1 text-center" }).appendTo("#" + role + "carouselPosition" + i)
     $("<div>").attr({ "id": role + "cardContainerHeader" + i, "class": "card cardHeader ml-1 mr-1 text-center" }).appendTo("#" + role + "cardContainer" + i)
     $("<h5>").text("Name").attr({ "id": role + "name" + i, "class": "cardText" }).appendTo("#" + role + "cardContainerHeader" + i)
-    $("<img>").attr({ "id": role + "icon" + i, "src": "../src/images/" + role + ".png", "height": "auto", "width": "30px" }).appendTo("#" + role + "name" + i)
+    $("<img>").attr({ "id": role + "icon" + i, "src": "./src/images/" + role + ".png", "height": "auto", "width": "30px" }).appendTo("#" + role + "name" + i)
     $("<h5>").text("role" + i).attr({ "id": role + "role" + i, "class": "cardText" }).appendTo("#" + role + "cardContainerHeader" + i)
     $("<div>").attr({ "id": role + "cardContainerContent" + i, "class": "card ml-1 mr-1 text-center" }).appendTo("#" + role + "cardContainer" + i)
     $("<h6>").text("ID" + i).attr({ "id": role + "ID" + i, "class": "cardText" }).appendTo("#" + role + "cardContainerContent" + i)
