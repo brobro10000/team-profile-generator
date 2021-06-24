@@ -6,10 +6,11 @@ const Manager = require("./lib/Manager")
 const Engineer = require("./lib/Engineer")
 const Intern = require("./lib/Intern") 
 const managerArray = []
-const internArray = []
 const engineerArray = []
+const internArray = []
+const allData = []
 const filename = 'index'
-const extension = '.html'
+const extension = '.txt'
 const generalQuestions = [//name ID Email
     {
         type: 'input',
@@ -66,8 +67,36 @@ const managerQuestions = [
         }
     }
 ]
-const engineerQuestions = 1
-const internQuestions = 1
+const engineerQuestions = [
+    {
+        type: 'input',
+        name: 'github',
+        message: 'Enter your engineer\'s Github username. (Required)',
+        validate: engineersGithub => {
+            if (engineersGithub) {
+                return true;
+            } else {
+                console.log('You need to enter a github username');
+                return false;
+            }
+        }
+    }
+]
+const internQuestions = [
+    {
+        type: 'input',
+        name: 'school',
+        message: 'Enter the school/university you attend. (Required)',
+        validate: internsSchool => {
+            if (internsSchool) {
+                return true;
+            } else {
+                console.log('You need to enter a github username');
+                return false;
+            }
+        }
+    }
+]
 const initialPrompt = [
     {
         type: 'list',
@@ -79,10 +108,13 @@ const initialPrompt = [
 function prompt(){
 inquirer.prompt(initialPrompt).then(data=>{
     if(data.teamMember == 'Done')
-    {
-      return writeToFile(filename)  
+    { 
+      allData.push(managerArray)
+      allData.push(engineerArray)
+      allData.push(internArray)
+      return writeToFile(filename,allData)  
     } else {
-        return employeePrompts(data.teamMember)
+      return employeePrompts(data.teamMember)
     }
 })
 }
@@ -91,12 +123,12 @@ function employeePrompts(teamMember){
         if(teamMember == 'Manager'){
         return managerPrompts(data)
         }
-        // if(teamMember == 'Engineer'){
-        // return managerPrompts()
-        // }
-        // if(teamMember == 'Intern'){
-        // return internPrompts()
-        // }
+        if(teamMember == 'Engineer'){
+        return engineerPrompts(data)
+        }
+        if(teamMember == 'Intern'){
+        return internPrompts(data)
+        }
     })
 }
 function managerPrompts(managerData){
@@ -111,11 +143,35 @@ function managerPrompts(managerData){
         prompt()
     })
 }
+function engineerPrompts(engineerData){
+    inquirer.prompt(engineerQuestions).then(data=>{
+        const engineer = new Engineer(engineerData.name,engineerData.id,engineerData.email,data.github)
+        console.log(engineer)
+        for(var i = engineerArray.length;i<=engineerArray.length;i+=2)
+        {
+            engineerArray.push(engineer)
+            console.log(engineerArray)
+        }
+        prompt()
+    })
+}
+function internPrompts(internData){
+    inquirer.prompt(internQuestions).then(data=>{
+        const intern = new Engineer(internData.name,internData.id,internData.email,data.school)
+        console.log(intern)
+        for(var i = internArray.length;i<=internArray.length;i+=2)
+        {
+            internArray.push(intern)
+            console.log(internArray)
+        }
+        prompt()
+    })
+}
 var i = 1
-function writeToFile(fileName) {
+function writeToFile(fileName,data) {
     fs.access(`${fileName}(${i++})${extension}`, (err) => {
         if (err) {
-            fs.writeFile(`${fileName}(${--i})${extension}`, generateHTML(), function (err) {
+            fs.writeFile(`${fileName}(${--i})${extension}`, JSON.stringify(data)/*generateHTML()*/, function (err) {
                 if (err) {
                     return console.log(err);
                 }
