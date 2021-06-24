@@ -7,7 +7,7 @@ function header() {
 function main() {
     $("<main>").attr({ "id": "main" }).appendTo(document.body)
 }
-function carouselCreator(innerItems, role) {
+function carouselCreator(innerItems, role,data) {
     if (innerItems == 0) {
         return
     } else {
@@ -15,7 +15,7 @@ function carouselCreator(innerItems, role) {
         $("<div>").attr({ "id": role + "CarouselInner", "class": "carousel-inner" }).appendTo("#" + role + "CarouselContainer")
         for (var i = 0; i < innerItems; i++) {
             carouselInner(i, role)
-            cards(i, role)
+            cards(i, role,data)
         }
         if (innerItems == 1) {
             return
@@ -31,7 +31,7 @@ function carouselInner(i, role) {
         $("<div>").attr({ "id": role + "carouselPosition" + i, "class": "carousel-item" }).appendTo("#" + role + "CarouselInner")
     }
 }
-function cards(i, role) {
+function cards(i, role,data) {
     $("<div>").attr({ "id": role + "cardContainer" + i, "class": "card ml-1 mr-1 text-center" }).appendTo("#" + role + "carouselPosition" + i)
     $("<div>").attr({ "id": role + "cardContainerHeader" + i, "class": "card cardHeader ml-1 mr-1 text-center" }).appendTo("#" + role + "cardContainer" + i)
     $("<h5>").text("Name").attr({ "id": role + "name" + i, "class": "cardText" }).appendTo("#" + role + "cardContainerHeader" + i)
@@ -53,10 +53,13 @@ function carouselButtons(role) {
 function startProgram() {
     header()
     main()
-    carouselCreator(3, "manager")
-    carouselCreator(6, "engineer")
-    carouselCreator(10, "intern")
+    carouselCreator(2,'Manager')
+    carouselCreator(2,'Engineer')
+    carouselCreator(2,'Intern')
+    // carouselCreator(i, role,data)
+    // carouselCreator(i, role,data)
+    // carouselCreator(i, role,data)
 }
-
 startProgram()
 
+module.exports = {carouselCreator}

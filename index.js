@@ -1,16 +1,22 @@
+// const browserify = require("browserify")
+// const jsdom = require("jsdom");
+// const { JSDOM } = jsdom;
+// const dom = new JSDOM('<!DOCTYPE html><p>HelloWorld</p>')
+// const $ = require("jquery")
+// const {carouselCreator} = require("./script")
 const inquirer = require("inquirer")
 const fs = require("fs");
-const { generateHTML } = require("./src/generateHTML");
+const { generateHTML, generateGeneralQuestions } = require("./src/generateHTML");
 const Employee = require("./lib/Employee")
 const Manager = require("./lib/Manager")
 const Engineer = require("./lib/Engineer")
-const Intern = require("./lib/Intern") 
+const Intern = require("./lib/Intern"); 
 const managerArray = []
 const engineerArray = []
 const internArray = []
 const allData = []
 const filename = 'index'
-const extension = '.txt'
+const extension = '.html'
 const generalQuestions = [//name ID Email
     {
         type: 'input',
@@ -107,11 +113,13 @@ const initialPrompt = [
 ]
 function prompt(){
 inquirer.prompt(initialPrompt).then(data=>{
-    if(data.teamMember == 'Done')
-    { 
-      allData.push(managerArray)
-      allData.push(engineerArray)
-      allData.push(internArray)
+    if(data.teamMember == 'Done'){ 
+      if(managerArray[0] == undefined)
+      managerArray[0] = 0
+      if(engineerArray[0] == undefined)
+      engineerArray[0] = 0
+      if(internArray[0] == undefined)
+      internArray[0] = 0
       return writeToFile(filename,allData)  
     } else {
       return employeePrompts(data.teamMember)
@@ -157,7 +165,7 @@ function engineerPrompts(engineerData){
 }
 function internPrompts(internData){
     inquirer.prompt(internQuestions).then(data=>{
-        const intern = new Engineer(internData.name,internData.id,internData.email,data.school)
+        const intern = new Intern(internData.name,internData.id,internData.email,data.school)
         console.log(intern)
         for(var i = internArray.length;i<=internArray.length;i+=2)
         {
@@ -171,15 +179,17 @@ var i = 1
 function writeToFile(fileName,data) {
     fs.access(`${fileName}(${i++})${extension}`, (err) => {
         if (err) {
-            fs.writeFile(`${fileName}(${--i})${extension}`, JSON.stringify(data)/*generateHTML()*/, function (err) {
+            fs.writeFile(`${fileName}(${--i})${extension}`, generateHTML(managerArray,engineerArray,internArray), function (err) {
                 if (err) {
                     return console.log(err);
                 }
                 console.log(`${fileName}(${i}) successfully generated.`);
+                // startProgram(managerArray.length,managerArray[0].getRole(),managerArray)
             });
         } else {
             return writeToFile(fileName)
         }
     })
 }
+
 prompt()
