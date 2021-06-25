@@ -10,7 +10,7 @@ const { generateHTML, generateGeneralQuestions } = require("./src/generateHTML")
 const Employee = require("./lib/Employee")
 const Manager = require("./lib/Manager")
 const Engineer = require("./lib/Engineer")
-const Intern = require("./lib/Intern"); 
+const Intern = require("./lib/Intern");
 const managerArray = []
 const engineerArray = []
 const internArray = []
@@ -108,72 +108,69 @@ const initialPrompt = [
         type: 'list',
         name: 'teamMember',
         message: 'Enter a team member to enter, or hit Done to generate your webpage.',
-        choices: ['Manager','Engineer','Intern','Done']
+        choices: ['Manager', 'Engineer', 'Intern', 'Done']
     }
 ]
-function prompt(){
-inquirer.prompt(initialPrompt).then(data=>{
-    if(data.teamMember == 'Done'){ 
-      if(managerArray[0] == undefined)
-      managerArray[0] = 0
-      if(engineerArray[0] == undefined)
-      engineerArray[0] = 0
-      if(internArray[0] == undefined)
-      internArray[0] = 0
-      return writeToFile(filename,allData)  
-    } else {
-      return employeePrompts(data.teamMember)
-    }
-})
-}
-function employeePrompts(teamMember){
-    inquirer.prompt(generalQuestions).then(data=>{
-        if(teamMember == 'Manager'){
-        return managerPrompts(data)
-        }
-        if(teamMember == 'Engineer'){
-        return engineerPrompts(data)
-        }
-        if(teamMember == 'Intern'){
-        return internPrompts(data)
+function prompt() {
+    inquirer.prompt(initialPrompt).then(data => {
+        if (data.teamMember == 'Done') {
+            if (managerArray[0] == undefined)
+                managerArray[0] = 0
+            if (engineerArray[0] == undefined)
+                engineerArray[0] = 0
+            if (internArray[0] == undefined)
+                internArray[0] = 0
+            return writeToFile(filename)
+        } else {
+            return employeePrompts(data.teamMember)
         }
     })
 }
-function managerPrompts(managerData){
-    inquirer.prompt(managerQuestions).then(data=>{
-        const manager = new Manager(managerData.name,managerData.id,managerData.email,data.officeNumber)
-        for(var i = managerArray.length;i<=managerArray.length;i+=2)
-        {
+function employeePrompts(teamMember) {
+    inquirer.prompt(generalQuestions).then(data => {
+        if (teamMember == 'Manager') {
+            return managerPrompts(data)
+        }
+        if (teamMember == 'Engineer') {
+            return engineerPrompts(data)
+        }
+        if (teamMember == 'Intern') {
+            return internPrompts(data)
+        }
+    })
+}
+function managerPrompts(managerData) {
+    inquirer.prompt(managerQuestions).then(data => {
+        const manager = new Manager(managerData.name, managerData.id, managerData.email, data.officeNumber)
+        for (var i = managerArray.length; i <= managerArray.length; i += 2) {
             managerArray.push(manager)
         }
         prompt()
     })
 }
-function engineerPrompts(engineerData){
-    inquirer.prompt(engineerQuestions).then(data=>{
-        const engineer = new Engineer(engineerData.name,engineerData.id,engineerData.email,data.github)
-        for(var i = engineerArray.length;i<=engineerArray.length;i+=2)
-        {
+function engineerPrompts(engineerData) {
+    inquirer.prompt(engineerQuestions).then(data => {
+        const engineer = new Engineer(engineerData.name, engineerData.id, engineerData.email, data.github)
+        for (var i = engineerArray.length; i <= engineerArray.length; i += 2) {
             engineerArray.push(engineer)
         }
         prompt()
     })
 }
-function internPrompts(internData){
-    inquirer.prompt(internQuestions).then(data=>{
-        const intern = new Intern(internData.name,internData.id,internData.email,data.school)
-        for(var i = internArray.length;i<=internArray.length;i+=2)
-        {
+function internPrompts(internData) {
+    inquirer.prompt(internQuestions).then(data => {
+        const intern = new Intern(internData.name, internData.id, internData.email, data.school)
+        for (var i = internArray.length; i <= internArray.length; i += 2) {
             internArray.push(intern)
         }
         prompt()
     })
 }
 var i = 1
-function writeToFile(fileName,data) {
+function writeToFile(fileName) {
     fs.access(`${fileName}(${i++})${extension}`, (err) => {
         if (err) {
-            fs.writeFile(`${fileName}(${--i})${extension}`, generateHTML(managerArray,engineerArray,internArray), function (err) {
+            fs.writeFile(`${fileName}(${--i})${extension}`, generateHTML(managerArray, engineerArray, internArray), function (err) {
                 if (err) {
                     return console.log(err);
                 }
