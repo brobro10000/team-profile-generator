@@ -1,6 +1,6 @@
 const Manager = require('../lib/Manager')
 
-test('create employee object', () => {
+test('create manager object', () => {
     const employee = new Manager('John', '5', 'JohnSmith@gmail.com','10')
 
     expect(employee).toBe(employee)
@@ -103,7 +103,7 @@ test('check empty office Number', () => {
     }
     expect(expectedErrorMessage).toBe(expectedError.message)
 });
-test('check negative ID', () => {
+test('check negative office number', () => {
     let expectedErrorMessage = "Office Number must be a positive number";
 
     try {

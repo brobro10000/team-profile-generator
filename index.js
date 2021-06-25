@@ -3,7 +3,7 @@
 // const { JSDOM } = jsdom;
 // const dom = new JSDOM('<!DOCTYPE html><p>HelloWorld</p>')
 // const $ = require("jquery")
-// const {carouselCreator} = require("./script")
+// const {carouselCreator} = require("./dist/script")
 const inquirer = require("inquirer")
 const fs = require("fs");
 const { generateHTML, generateGeneralQuestions } = require("./src/generateHTML");
@@ -17,7 +17,7 @@ const internArray = []
 const allData = []
 const filename = 'index'
 const extension = '.html'
-const generalQuestions = [//name ID Email
+const generalQuestions = [
     {
         type: 'input',
         name: 'name',
@@ -142,11 +142,9 @@ function employeePrompts(teamMember){
 function managerPrompts(managerData){
     inquirer.prompt(managerQuestions).then(data=>{
         const manager = new Manager(managerData.name,managerData.id,managerData.email,data.officeNumber)
-        console.log(manager)
         for(var i = managerArray.length;i<=managerArray.length;i+=2)
         {
             managerArray.push(manager)
-            console.log(managerArray)
         }
         prompt()
     })
@@ -154,11 +152,9 @@ function managerPrompts(managerData){
 function engineerPrompts(engineerData){
     inquirer.prompt(engineerQuestions).then(data=>{
         const engineer = new Engineer(engineerData.name,engineerData.id,engineerData.email,data.github)
-        console.log(engineer)
         for(var i = engineerArray.length;i<=engineerArray.length;i+=2)
         {
             engineerArray.push(engineer)
-            console.log(engineerArray)
         }
         prompt()
     })
@@ -166,11 +162,9 @@ function engineerPrompts(engineerData){
 function internPrompts(internData){
     inquirer.prompt(internQuestions).then(data=>{
         const intern = new Intern(internData.name,internData.id,internData.email,data.school)
-        console.log(intern)
         for(var i = internArray.length;i<=internArray.length;i+=2)
         {
             internArray.push(intern)
-            console.log(internArray)
         }
         prompt()
     })

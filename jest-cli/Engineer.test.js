@@ -1,6 +1,6 @@
 const Engineer = require('../lib/Engineer')
 
-test('create employee object', () => {
+test('create engineer object', () => {
     const employee = new Engineer('John', '5', 'JohnSmith@gmail.com', 'testGit')
 
     expect(employee).toBe(employee)

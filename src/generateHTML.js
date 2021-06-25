@@ -6,64 +6,98 @@ function generateHeader() {
     </header>
     `
 }
-function generateGeneralQuestions(role, data) {
+function generateGeneralQuestions(data) {
+    var cardOutput = ''
+    for(var i = 0; i< data.length;i++)
+    cardOutput+= carouselPosition(data,i)
     return `
-<section id=${role}Section>
-    <div id="${role}CarouselContainer" class="carousel slide carouselContainer">
-        <div id="${role}CarouselInner" class="carousel-inner">
-            ${carouselPosition(role)}
+    <div id="${data[0].getRole()}CarouselContainer" class="carousel slide carouselContainer">
+        <div id="${data[0].getRole()}CarouselInner" class="carousel-inner">
+            ${cardOutput}
         </div>
-    </div>
-    ${generateCarouselArrows(role,data)}
-</section>  
-        `
+    ${generateCarouselArrows(data)}
+    </div>`
 }
-function generateCarouselArrows(role,data){
+function generateCarouselArrows(data){
     if(data.length == 1) {
         return ``
     }
     else{
         return `
-        <a id="${role}prevButton" class="carousel-control-prev" href="#${role}CarouselContainer" role="button" data-slide="prev">
+        <a id="${data[0].getRole()}prevButton" class="carousel-control-prev" href="#${data[0].getRole()}CarouselContainer" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Prev</span></a>
-        <a id="${role}nextButton" class="carousel-control-next" href="#${role}CarouselContainer" role="button" data-slide="next">
+            <span class="sr-only">Prev</span>
+        </a>
+        <a id="${data[0].getRole()}nextButton" class="carousel-control-next" href="#${data[0].getRole()}CarouselContainer" role="button" data-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span></a>`
+            <span class="sr-only">Next</span>
+        </a>
+            `
     }
 }
-function carouselPosition(role) {
-    return `<div id="${role}carouselPosition0" class="carousel-item active">
-                ${carouselCard(role)}
+function carouselPosition(data,i) {
+    var className = `carousel-item active`
+    if(i == 0){}
+    else{
+        className = `carousel-item`
+    }
+    return `<div id="${data[i].getRole()}carouselPosition${i}" class="${className}">
+                ${carouselCard(data,i)}
             </div>`
 }
-function carouselCard(role) {
-    return `<div id="${role}cardContainer0" class="card ml-1 mr-1 text-center">
-                <div id="${role}cardContainerHeader0" class="card cardHeader ml-1 mr-1 text-center">
-                    <h5 id="${role}name0" class="cardText">
-                    Name
-                    <img id="${role}icon0" src="./src/images/${role}.png" height="auto" width="30px"></h5>
-                    <h5 id="${role}role0" class="cardText">role0</h5>
+function carouselCard(data,i) {
+    if(data[0].getRole() == 'Manager'){
+        var outputUnique =`
+                    <h6 id="${data[0].getRole()}OfficeNumber${i}" class="cardText">
+                        Office number: ${data[i].getOfficeNumber()}
+                    </h6>`    
+    }
+    if(data[0].getRole() == 'Engineer'){
+        var outputUnique =`
+                    <h6 id="${data[0].getRole()}Github${i}" class="cardText">
+                        Github:<a href="https://github.com/${data[i].getGithub()}" target = "_blank">https://github.com/${data[i].getGithub()}</a>
+                    </h6>`        
+    }
+    if(data[0].getRole() == 'Intern'){
+        var outputUnique =`
+                    <h6 id="${data[0].getRole()}School${i}" class="cardText">
+                        School: ${data[i].getSchool()}
+                    </h6>`    
+    }
+    return `<div id="${data[0].getRole()}cardContainer${i}" class="card ml-1 mr-1 text-center">
+                <div id="${data[0].getRole()}cardContainerHeader${i}" class="card cardHeader ml-1 mr-1 text-center">
+                    <h5 id="${data[0].getRole()}name${i}" class="cardText">
+                        ${data[i].getName()}
+                        <img id="${data[0].getRole()}icon${i}" src="./src/images/${data[0].getRole()}.png" height="auto" width="30px">
+                    </h5>
+                    <h5 id="${data[0].getRole()}role${i}" class="cardText">
+                    ${data[0].getRole()} #${i+1}
+                    </h5>
                 </div>
-                <div id="${role}cardContainerContent0" class="card ml-1 mr-1 text-center">
-                    <h6 id="${role}ID0" class="cardText">ID0</h6>
-                    <h6 id="${role}Email0" class="cardText">Email0</h6>
-                    <h6 id="${role}GithubSchool0" class="cardText">GorS0</h6> 
+                <div id="${data[0].getRole()}cardContainerContent${i}" class="card ml-1 mr-1 text-center">
+                    <h6 id="${data[0].getRole()}Id${i}" class="cardText">
+                        ID: ${data[i].getId()}
+                    </h6>
+                    <h6 id="${data[0].getRole()}Email${i}" class="cardText">
+                        Email: <a href="mailto:${data[i].getEmail()}">${data[i].getEmail()}</a>
+                    </h6>
+                    ${outputUnique}
+                </div>
             </div>`
 }
 function ifExist(managerData,engineerData,internData){
     var output = ``
     if(managerData[0] == 0){}
     else{
-        output += generateGeneralQuestions(managerData[0].getRole(),managerData)
+        output += generateGeneralQuestions(managerData)
     }
     if(engineerData[0] == 0){}
     else{
-        output += generateGeneralQuestions(engineerData[0].getRole(),engineerData)
+        output += generateGeneralQuestions(engineerData)
     }
     if(internData[0] == 0){}
     else{
-        output += generateGeneralQuestions(internData[0].getRole(),internData)
+        output += generateGeneralQuestions(internData)
     }
     return output
 }
