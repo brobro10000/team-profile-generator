@@ -14,7 +14,7 @@ header{
     margin: 5px;
 }
 .carouselContainer{
-    margin:50px 500px;
+    margin:50px 30%;
     text-align: -webkit-center;
 }
 #nextButton,#prevButton {
@@ -26,6 +26,25 @@ header{
     padding: 25px;
 }
 .carousel-inner {
-    width: 75%;
+    width: 100%;
 }
-
+.cardHeader {
+    background: dodgerblue;
+}
+.cardHeader .cardText {
+    color:white;
+    margin-top: .5rem;
+}
+.cardText {
+    margin-top: .5rem;
+}
+img {
+    background: azure;
+    border-radius: 5px;
+    margin: 0px 5px;
+}
+.card {
+    width: 500px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+}

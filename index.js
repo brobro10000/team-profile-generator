@@ -1,9 +1,4 @@
-// const browserify = require("browserify")
-// const jsdom = require("jsdom");
-// const { JSDOM } = jsdom;
-// const dom = new JSDOM('<!DOCTYPE html><p>HelloWorld</p>')
-// const $ = require("jquery")
-// const {carouselCreator} = require("./dist/script")
+//variables required 
 const inquirer = require("inquirer")
 const fs = require("fs");
 const { generateHTML } = require("./src/generateHTML");
@@ -17,6 +12,7 @@ const internArray = []
 const allData = []
 const filename = 'index'
 const extension = '.html'
+//common questions amongst all employees
 const generalQuestions = [
     {
         type: 'input',
@@ -58,6 +54,7 @@ const generalQuestions = [
         }
     }
 ]
+//manager specific question
 const managerQuestions = [
     {
         type: 'input',
@@ -73,6 +70,7 @@ const managerQuestions = [
         }
     }
 ]
+//engineer specific question
 const engineerQuestions = [
     {
         type: 'input',
@@ -88,6 +86,7 @@ const engineerQuestions = [
         }
     }
 ]
+//intern specific question
 const internQuestions = [
     {
         type: 'input',
@@ -103,6 +102,7 @@ const internQuestions = [
         }
     }
 ]
+//looping list for user to select to answer first
 const initialPrompt = [
     {
         type: 'list',
@@ -111,6 +111,7 @@ const initialPrompt = [
         choices: ['Manager', 'Engineer', 'Intern', 'Done']
     }
 ]
+//prompts called and either writes data for proceeds to employee prompt
 function prompt() {
     inquirer.prompt(initialPrompt).then(data => {
         if (data.teamMember == 'Done') {
@@ -126,6 +127,7 @@ function prompt() {
         }
     })
 }
+//determine which information user plans to enter after answering general questions
 function employeePrompts(teamMember) {
     inquirer.prompt(generalQuestions).then(data => {
         if (teamMember == 'Manager') {
@@ -139,33 +141,29 @@ function employeePrompts(teamMember) {
         }
     })
 }
+//prompts for specific role specified by user 
 function managerPrompts(managerData) {
     inquirer.prompt(managerQuestions).then(data => {
         const manager = new Manager(managerData.name, managerData.id, managerData.email, data.officeNumber)
-        for (var i = managerArray.length; i <= managerArray.length; i += 2) {
-            managerArray.push(manager)
-        }
+        managerArray.push(manager)
         prompt()
     })
 }
 function engineerPrompts(engineerData) {
     inquirer.prompt(engineerQuestions).then(data => {
         const engineer = new Engineer(engineerData.name, engineerData.id, engineerData.email, data.github)
-        for (var i = engineerArray.length; i <= engineerArray.length; i += 2) {
-            engineerArray.push(engineer)
-        }
+        engineerArray.push(engineer)
         prompt()
     })
 }
 function internPrompts(internData) {
     inquirer.prompt(internQuestions).then(data => {
         const intern = new Intern(internData.name, internData.id, internData.email, data.school)
-        for (var i = internArray.length; i <= internArray.length; i += 2) {
-            internArray.push(intern)
-        }
+        internArray.push(intern)
         prompt()
     })
 }
+//global i to determine which  file is created and writes file
 var i = 1
 function writeToFile(fileName) {
     fs.access(`${fileName}(${i++})${extension}`, (err) => {
@@ -175,7 +173,6 @@ function writeToFile(fileName) {
                     return console.log(err);
                 }
                 console.log(`${fileName}(${i}) successfully generated.`);
-                // startProgram(managerArray.length,managerArray[0].getRole(),managerArray)
             });
         } else {
             return writeToFile(fileName)

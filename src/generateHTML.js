@@ -1,4 +1,4 @@
-//Creates markdown page
+//Creates Header of the HTML
 function generateHeader() {
     return `
     <header id="headerContainer">
@@ -6,6 +6,7 @@ function generateHeader() {
     </header>
     `
 }
+//Creates initial container for each instance if it exist
 function generateGeneralQuestions(data) {
     var cardOutput = ''
     for(var i = 0; i< data.length;i++)
@@ -18,6 +19,7 @@ function generateGeneralQuestions(data) {
     ${generateCarouselArrows(data)}
     </div>`
 }
+//Creates carousel buttons
 function generateCarouselArrows(data){
     if(data.length == 1) {
         return ``
@@ -35,16 +37,18 @@ function generateCarouselArrows(data){
             `
     }
 }
+//Order of each carousel inner item
 function carouselPosition(data,i) {
     var className = `carousel-item active`
     if(i == 0){}
     else{
         className = `carousel-item`
     }
-    return `<div id="${data[i].getRole()}carouselPosition${i}" class="${className}">
+    return `<div id="${data[i].getRole()}carouselPosition${i}" class="${className} cardContainer">
                 ${carouselCard(data,i)}
             </div>`
 }
+//Creates card with user entered information
 function carouselCard(data,i) {
     if(data[0].getRole() == 'Manager'){
         var outputUnique =`
@@ -64,8 +68,8 @@ function carouselCard(data,i) {
                         School: ${data[i].getSchool()}
                     </h6>`    
     }
-    return `<div id="${data[0].getRole()}cardContainer${i}" class="card ml-1 mr-1 text-center">
-                <div id="${data[0].getRole()}cardContainerHeader${i}" class="card cardHeader ml-1 mr-1 text-center">
+    return `<div id="${data[0].getRole()}cardContainer${i}" class="card text-center">
+                <div id="${data[0].getRole()}cardContainerHeader${i}" class="cardHeader text-center">
                     <h5 id="${data[0].getRole()}name${i}" class="cardText">
                         ${data[i].getName()}
                         <img id="${data[0].getRole()}icon${i}" src="./src/images/${data[0].getRole()}.png" height="auto" width="30px">
@@ -74,7 +78,7 @@ function carouselCard(data,i) {
                     ${data[0].getRole()} #${i+1}
                     </h5>
                 </div>
-                <div id="${data[0].getRole()}cardContainerContent${i}" class="card ml-1 mr-1 text-center">
+                <div id="${data[0].getRole()}cardContainerContent${i}" class="text-center">
                     <h6 id="${data[0].getRole()}Id${i}" class="cardText">
                         ID: ${data[i].getId()}
                     </h6>
@@ -85,6 +89,7 @@ function carouselCard(data,i) {
                 </div>
             </div>`
 }
+//checks if any data array is empty and does not populate that information
 function ifExist(managerData,engineerData,internData){
     var output = ``
     if(managerData[0] == 0){}
@@ -101,8 +106,8 @@ function ifExist(managerData,engineerData,internData){
     }
     return output
 }
+//creates HTML file
 function generateHTML(managerData,engineerData,internData) {
-    console.log(managerData,engineerData,internData)
     return `
     <!DOCTYPE html>
 <html lang="en">

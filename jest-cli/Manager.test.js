@@ -1,4 +1,5 @@
 const Manager = require('../lib/Manager')
+const Employee = require('../lib/Employee')
 
 test('create manager object', () => {
     const employee = new Manager('John', '5', 'JohnSmith@gmail.com','10')
