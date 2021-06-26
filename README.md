@@ -59,7 +59,7 @@ This program allows you to create a team profile of your team, allowing the user
 # Why it Matters?
 Using test driven development is essential to writing virtually unbreakable code. Writing test driven code throughout a project, developers can avoid situations where edge cases may occur that the user may encounter through day to day use. In a simple program such as the team profile generator it is easy to fix, but in a larger scale project with thousands of lines of code and a multitude of classes intricately interacting with each other, test driven development is key to ensure the best quality code is written for the best user experience in the end product.
 
-Watch my Team Profile Generator in action! The image below links to a Youtube video of the demonstration of the readme generator, or [Click Here](https://youtu.be/rct3pW8InJc)!
+Watch my Team Profile Generator in action! The image below links to a Youtube video of the demonstration of the team profile generator, or [Click Here](https://youtu.be/rct3pW8InJc)!
 
 [![Image of My Youtube Video of Module 10
 ](src/images/videoSS.PNG)
